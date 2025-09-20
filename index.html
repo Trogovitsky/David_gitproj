@@ -1025,6 +1025,7 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .social-btn {
@@ -1050,10 +1051,218 @@
             transform-style: preserve-3d;
             transition: transform 0.1s;
         }
+
+        /* Стили для музыкального плеера */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        .music-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .music-toggle i {
+            font-size: 18px;
+            color: white;
+        }
+
+        .music-info {
+            display: flex;
+            flex-direction: column;
+            max-width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .music-player.expanded .music-info {
+            max-width: 200px;
+            opacity: 1;
+            margin-right: 10px;
+        }
+
+        .music-title {
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-artist {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .volume-control {
+            width: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .music-player.expanded .volume-control {
+            width: 80px;
+            margin-left: 5px;
+        }
+
+        .volume-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .playlist-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            margin-left: 5px;
+        }
+
+        .music-player.expanded .playlist-btn {
+            opacity: 1;
+        }
+
+        .playlist-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .playlist-panel {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 999;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .playlist-panel.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .playlist-panel h4 {
+            margin-bottom: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .playlist-item {
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .playlist-item.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--accent-color);
+        }
+
+        .playlist-item-title {
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playlist-item-artist {
+            font-size: 12px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    
+    <!-- Музыкальный плеер -->
+    <div class="music-player" id="music-player">
+        <div class="music-toggle" id="music-toggle">
+            <i class="fas fa-play" id="play-icon"></i>
+        </div>
+        <div class="music-info">
+            <div class="music-title" id="music-title">Загрузка...</div>
+            <div class="music-artist" id="music-artist">9 "З" класс</div>
+        </div>
+        <div class="volume-control">
+            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+        </div>
+        <div class="playlist-btn" id="playlist-btn">
+            <i class="fas fa-list"></i>
+        </div>
+    </div>
+    
+    <div class="playlist-panel" id="playlist-panel">
+        <h4>Плейлист 9 "З"</h4>
+        <div class="playlist" id="playlist">
+            <!-- Плейлист будет заполнен через JavaScript -->
+        </div>
+    </div>
     
     <!-- Оверлей для затемнения фона -->
     <div class="overlay" id="overlay"></div>
@@ -1194,6 +1403,9 @@
                 document.getElementById('close-class-info').addEventListener('click', hideClassInfo);
                 document.getElementById('overlay').addEventListener('click', hideClassInfo);
                 
+                // Инициализация музыкального плеера
+                initMusicPlayer();
+                
                 // Скрываем загрузчик
                 document.getElementById('loader').classList.remove('active');
             }, 1500);
@@ -1257,7 +1469,7 @@
             },
             {
                 id: 10,
-                name: "Лера Рудикова",
+                name: "Лера Рудякова",
                 image: "https://i.pinimg.com/736x/d6/44/c7/d644c7f116ad2c77b0f4a1dd0b54f183.jpg",
                 description: "Лера Рудякова обожает алгебру и геометрию Анастасии Вадимовны... особенно вслух. Руку поднимать - это не про неё, но когда отвечает - иногда даже умно"
             },
@@ -1370,6 +1582,36 @@
         let filteredClassmates = [...classmates];
         let isDarkTheme = false;
         let currentView = 'grid';
+
+        // Переменные для музыкального плеера
+        let audioPlayer = null;
+        let isPlaying = false;
+        let currentTrackIndex = 0;
+        let playlistExpanded = false;
+
+        // Плейлист для класса
+        const playlist = [
+            {
+                title: "Школьный вальс",
+                artist: "9 'З' Класс",
+                src: "https://cdn.pixabay.com/download/audio/2022/01/20/audio_172d7dec90.mp3?filename=soft-sweet-romantic-piano-123780.mp3"
+            },
+            {
+                title: "Весёлая перемена",
+                artist: "9 'З' Класс",
+                src: "https://cdn.pixabay.com/download/audio/2021/10/25/audio_7b607246f8.mp3?filename=upbeat-funny-ukulele-144009.mp3"
+            },
+            {
+                title: "Дружба крепкая",
+                artist: "9 'З' Класс",
+                src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_5b34f850a8.mp3?filename=acoustic-inspirational-120bpm-12109.mp3"
+            },
+            {
+                title: "Выпускной",
+                artist: "9 'З' Класс",
+                src: "https://cdn.pixabay.com/download/audio/2022/10/25/audio_eb743c8298.mp3?filename=emotional-inspiring-piano-11713.mp3"
+            }
+        ];
 
         // Функция для показа информации о классе
         function showClassInfo() {
@@ -1726,6 +1968,144 @@
                 const y = (window.innerHeight / 2 - e.clientY) / 25;
                 
                 heading.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+        }
+
+        // Инициализация музыкального плеера
+        function initMusicPlayer() {
+            // Создаем элемент audio
+            audioPlayer = new Audio();
+            audioPlayer.volume = 0.5;
+            
+            // Устанавливаем первую композицию
+            loadTrack(currentTrackIndex);
+            
+            // Обработчики событий для кнопок
+            document.getElementById('music-toggle').addEventListener('click', togglePlay);
+            document.getElementById('volume-slider').addEventListener('input', setVolume);
+            document.getElementById('playlist-btn').addEventListener('click', togglePlaylist);
+            
+            // Обработчик события окончания трека
+            audioPlayer.addEventListener('ended', playNextTrack);
+            
+            // Обработчик для расширения/сворачивания плеера
+            document.getElementById('music-player').addEventListener('click', function(e) {
+                if (!e.target.closest('.music-toggle') && !e.target.closest('.playlist-btn')) {
+                    this.classList.toggle('expanded');
+                }
+            });
+            
+            // Заполняем плейлист
+            populatePlaylist();
+        }
+
+        // Загрузка трека
+        function loadTrack(index) {
+            if (index >= 0 && index < playlist.length) {
+                currentTrackIndex = index;
+                const track = playlist[index];
+                
+                audioPlayer.src = track.src;
+                audioPlayer.load();
+                
+                document.getElementById('music-title').textContent = track.title;
+                document.getElementById('music-artist').textContent = track.artist;
+                
+                // Обновляем активный элемент в плейлисте
+                const playlistItems = document.querySelectorAll('.playlist-item');
+                playlistItems.forEach((item, i) => {
+                    if (i === index) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Автовоспроизведение
+                if (isPlaying) {
+                    audioPlayer.play().catch(e => {
+                        console.log('Автовоспроизведение заблокировано. Нажмите на кнопку воспроизведения.');
+                    });
+                }
+            }
+        }
+
+        // Переключение воспроизведения/паузы
+        function togglePlay() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                document.getElementById('play-icon').classList.remove('fa-pause');
+                document.getElementById('play-icon').classList.add('fa-play');
+            } else {
+                audioPlayer.play().catch(e => {
+                    console.log('Ошибка воспроизведения:', e);
+                });
+                document.getElementById('play-icon').classList.remove('fa-play');
+                document.getElementById('play-icon').classList.add('fa-pause');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Установка громкости
+        function setVolume() {
+            const volume = document.getElementById('volume-slider').value;
+            audioPlayer.volume = volume;
+        }
+
+        // Воспроизведение следующего трека
+        function playNextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Воспроизведение предыдущего трека
+        function playPrevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            if (isPlaying) {
+                audioPlayer.play();
+            }
+        }
+
+        // Переключение видимости плейлиста
+        function togglePlaylist() {
+            const panel = document.getElementById('playlist-panel');
+            panel.classList.toggle('active');
+            playlistExpanded = !playlistExpanded;
+        }
+
+        // Заполнение плейлиста
+        function populatePlaylist() {
+            const playlistContainer = document.getElementById('playlist');
+            playlistContainer.innerHTML = '';
+            
+            playlist.forEach((track, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                if (index === currentTrackIndex) {
+                    item.classList.add('active');
+                }
+                
+                item.innerHTML = `
+                    <div class="playlist-item-title">${track.title}</div>
+                    <div class="playlist-item-artist">${track.artist}</div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    loadTrack(index);
+                    if (!isPlaying) {
+                        togglePlay();
+                    } else {
+                        audioPlayer.play();
+                    }
+                    document.getElementById('playlist-panel').classList.remove('active');
+                    playlistExpanded = false;
+                });
+                
+                playlistContainer.appendChild(item);
             });
         }
 
