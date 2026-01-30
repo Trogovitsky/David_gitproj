@@ -14,6 +14,242 @@
             font-family: 'Galindo', 'Arial', sans-serif;
         }
 
+        /* --- НОВЫЕ СТИЛИ ДЛЯ ВЕРХНЕЙ ПАНЕЛИ И АЛЬБОМА --- */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-tab {
+            color: white;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: var(--primary-color, #ff6b6b);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Секция альбома */
+        #album-section {
+            display: none;
+            padding-top: 100px;
+            min-height: 100vh;
+            animation: slideDownFade 0.6s ease forwards;
+        }
+
+        @keyframes slideDownFade {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: #ffeb3b;
+        }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 640 / 360;
+        }
+
+        .album-card .caption {
+            padding: 15px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .album-card .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .album-card:hover .zoom-icon {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ЛАЙТБОКС для полного просмотра фото */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            animation: zoomInLightbox 0.4s ease;
+        }
+
+        @keyframes zoomInLightbox {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 3001;
+        }
+
+        .lightbox-close:hover {
+            color: #ff6b6b;
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            transition: all 0.3s ease;
+            z-index: 3001;
+        }
+
+        .lightbox-nav:hover {
+            color: #ffeb3b;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Отступ для контента из-за фиксированной панели */
+        .main-content-wrapper {
+            padding-top: 60px;
+        }
+
+        /* --- КОНЕЦ НОВЫХ СТИЛЕЙ --- */
+
         :root {
             --primary-color: #ff6b6b;
             --secondary-color: #4ecdc4;
@@ -353,7 +589,7 @@
 
         .controls {
             position: fixed;
-            top: 20px;
+            top: 80px;
             right: 20px;
             z-index: 1000;
             display: flex;
@@ -843,7 +1079,7 @@
         /* Панель настроек */
         .settings-panel {
             position: fixed;
-            top: 80px;
+            top: 140px;
             right: 20px;
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
@@ -884,49 +1120,6 @@
             border: none;
             background: rgba(255, 255, 255, 0.2);
             color: white;
-        }
-
-        /* Анимация для переключения карточек */
-        .view-toggle {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-            gap: 10px;
-        }
-
-        .view-btn {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .view-btn.active {
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        /* Стили для списка */
-        .gallery.list-view {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .gallery.list-view .person-card {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            align-items: center;
-            text-align: left;
-        }
-
-        .gallery.list-view .person-image {
-            width: 80px;
-            height: 80px;
-            margin-right: 20px;
         }
 
         /* Адаптивность */
@@ -981,6 +1174,19 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .lightbox-nav {
+                font-size: 2rem;
+                padding: 10px;
+            }
+
+            .lightbox-prev {
+                left: 5px;
+            }
+
+            .lightbox-next {
+                right: 5px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1004,7 +1210,7 @@
             }
             
             .theme-toggle, .settings-toggle {
-                top: 10px;
+                top: 70px;
                 right: 10px;
                 width: 40px;
                 height: 40px;
@@ -1016,6 +1222,7 @@
 
             .controls {
                 flex-direction: column;
+                top: 70px;
             }
         }
 
@@ -1239,174 +1446,289 @@
 </head>
 <body>
     <div id="particles-js"></div>
-    
-    <!-- Музыкальный плеер -->
-    <div class="music-player" id="music-player">
-        <div class="music-toggle" id="music-toggle">
-            <i class="fas fa-play" id="play-icon"></i>
+
+    <!-- ЛАЙТБОКС ДЛЯ ПОЛНОГО ПРОСМОТРА ФОТО -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <span class="lightbox-nav lightbox-prev" id="lightbox-prev"><i class="fas fa-chevron-left"></i></span>
+        <span class="lightbox-nav lightbox-next" id="lightbox-next"><i class="fas fa-chevron-right"></i></span>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightbox-img">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
-        <div class="music-info">
-            <div class="music-title" id="music-title">Ждите, Загрузка...</div>
-            <div class="music-artist" id="music-artist">9 "З" класс</div>
-        </div>
-        <div class="volume-control">
-            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-        </div>
-        <div class="playlist-btn" id="playlist-btn">
-            <i class="fas fa-list"></i>
-        </div>
-    </div>
-    
-    <div class="playlist-panel" id="playlist-panel">
-        <h4>Плейлист 9 "З"</h4>
-        <div class="playlist" id="playlist">
-            <!-- Плейлист будет заполнен через JavaScript -->
-        </div>
-    </div>
-    
-    <!-- Оверлей для затемнения фона -->
-    <div class="overlay" id="overlay"></div>
-    
-    <!-- Сообщение о нашем классе -->
-    <div class="class-info-message" id="class-info">
-        <h2>Это 9 "З"</h2>
-        <p>Самый дружный, весёлый и творческий класс в школе! Мы всегда поддерживаем друг друга и вместе достигаем больших успехов, на самом деле у нас очень хороший и добрый класс.</p>
-        <button class="close-btn" id="close-class-info">Cпасибооо вам</button>
-    </div>
-    
-    <div class="loader" id="loader">
-        <div class="inner one"></div>
-        <div class="inner two"></div>
-        <div class="inner three"></div>
-        <div class="loader-text">Загрузка...</div>
-    </div>
-    
-    <div class="controls">
-        <div class="theme-toggle" id="theme-toggle">
-            <i class="fas fa-moon"></i>
-        </div>
-        <div class="settings-toggle" id="settings-toggle">
-            <i class="fas fa-cog"></i>
-        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
     </div>
 
-    <div class="settings-panel" id="settings-panel">
-        <h3>Настройки</h3>
-        <div class="setting-group">
-            <label for="animation-speed">Скорость анимации:</label>
-            <select id="animation-speed">
-                <option value="slow">Медленно</option>
-                <option value="normal" selected>Нормально</option>
-                <option value="fast">Быстро</option>
-            </select>
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <nav class="top-navbar">
+        <div class="nav-tabs">
+            <a class="nav-tab active" id="main-tab"><i class="fas fa-users"></i> Главная</a>
+            <a class="nav-tab" id="album-tab"><i class="fas fa-images"></i> Альбом 2025/2026</a>
         </div>
-        <div class="setting-group">
-            <label for="particles-density">Плотность частиц:</label>
-            <select id="particles-density">
-                <option value="low">Низкая</option>
-                <option value="medium" selected>Средняя</option>
-                <option value="high">Высокая</option>
-            </select>
-        </div>
-        <div class="setting-group">
-            <label for="color-scheme">Цветовая схема:</label>
-            <select id="color-scheme">
-                <option value="default" selected>По умолчанию</option>
-                <option value="pastel">Пастельная</option>
-                <option value="vibrant">Яркая</option>
-                <option value="monochrome">Монохромная</option>
-            </select>
-        </div>
-    </div>
-    
-    <div class="container">
-        <header>
-            <div class="header-container">
-                <h1 class="parallax-heading">9 "З" Класс</h1>
-                <i class="fas fa-star decoration-star star-1"></i>
-                <i class="fas fa-star decoration-star star-2"></i>
+    </nav>
+
+    <!-- СЕКЦИЯ АЛЬБОМА -->
+    <section id="album-section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 3rem; margin-bottom: 30px; font-family: 'Russo One';">Наш Альбом</h2>
+            <div class="album-grid" id="album-grid">
+                <!-- Фотографии будут добавлены через JavaScript -->
             </div>
-            <div class="class-subtitle">Самый добрый и весёлый</div>
-            
-            <div class="search-controls">
-                <button class="about-class-btn" id="about-class-btn">
-                    <i class="fas fa-info-circle"></i> О классе
-                </button>
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="search" placeholder="Поиск ученика...">
+        </div>
+    </section>
+
+    <!-- ОБЕРТКА ДЛЯ ГЛАВНОГО КОНТЕНТА -->
+    <div class="main-content-wrapper" id="main-content">
+        <!-- Музыкальный плеер -->
+        <div class="music-player" id="music-player">
+            <div class="music-toggle" id="music-toggle">
+                <i class="fas fa-play" id="play-icon"></i>
+            </div>
+            <div class="music-info">
+                <div class="music-title" id="music-title">Ждите, Загрузка...</div>
+                <div class="music-artist" id="music-artist">9 "З" класс</div>
+            </div>
+            <div class="volume-control">
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+            </div>
+            <div class="playlist-btn" id="playlist-btn">
+                <i class="fas fa-list"></i>
+            </div>
+        </div>
+
+        <div class="playlist-panel" id="playlist-panel">
+            <h4>Плейлист 9 "З"</h4>
+            <div class="playlist" id="playlist">
+                <!-- Плейлист будет заполнен через JavaScript -->
+            </div>
+        </div>
+
+        <!-- Оверлей для затемнения фона -->
+        <div class="overlay" id="overlay"></div>
+
+        <!-- Сообщение о нашем классе -->
+        <div class="class-info-message" id="class-info">
+            <h2>Это 9 "З"</h2>
+            <p>Самый дружный, весёлый и творческий класс в школе! Мы всегда поддерживаем друг друга и вместе достигаем больших успехов, на самом деле у нас очень хороший и добрый класс.</p>
+            <button class="close-btn" id="close-class-info">Cпасибооо вам</button>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+            <div class="loader-text">Загрузка...</div>
+        </div>
+
+        <div class="controls">
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="settings-toggle" id="settings-toggle">
+                <i class="fas fa-cog"></i>
+            </div>
+        </div>
+
+        <div class="settings-panel" id="settings-panel">
+            <h3>Настройки</h3>
+            <div class="setting-group">
+                <label for="animation-speed">Скорость анимации:</label>
+                <select id="animation-speed">
+                    <option value="slow">Медленно</option>
+                    <option value="normal" selected>Нормально</option>
+                    <option value="fast">Быстро</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label for="particles-density">Плотность частиц:</label>
+                <select id="particles-density">
+                    <option value="low">Низкая</option>
+                    <option value="medium" selected>Средняя</option>
+                    <option value="high">Высокая</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label for="color-scheme">Цветовая схема:</label>
+                <select id="color-scheme">
+                    <option value="default" selected>По умолчанию</option>
+                    <option value="pastel">Пастельная</option>
+                    <option value="vibrant">Яркая</option>
+                    <option value="monochrome">Монохромная</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="container">
+            <header>
+                <div class="header-container">
+                    <h1 class="parallax-heading">9 "З" Класс</h1>
+                    <i class="fas fa-star decoration-star star-1"></i>
+                    <i class="fas fa-star decoration-star star-2"></i>
                 </div>
+                <div class="class-subtitle">Самый добрый и весёлый</div>
+                
+                <div class="search-controls">
+                    <button class="about-class-btn" id="about-class-btn">
+                        <i class="fas fa-info-circle"></i> О классе
+                    </button>
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search" placeholder="Поиск ученика...">
+                    </div>
+                </div>
+            </header>
+
+            <div class="gallery" id="gallery">
+                <!-- Галерея будет заполнена через JavaScript -->
             </div>
-        </header>
 
-        <div class="view-toggle">
-            <button class="view-btn active" id="grid-view-btn">
-                <i class="fas fa-th"></i> Сетка
-            </button>
-            <button class="view-btn" id="list-view-btn">
-                <i class="fas fa-list"></i> Список
-            </button>
+            <div class="no-results" id="no-results">
+                <i class="fas fa-search"></i>
+                Ничего не найдено. Попробуй другой запрос живо.
+            </div>
+
+            <div id="details-container">
+                <!-- Детали будут заполнены через JavaScript -->
+            </div>
+
+            <footer>
+                © 2025 9 "З" Сделал Давид Исмаилов. 
+            </footer>
         </div>
-
-        <div class="gallery" id="gallery">
-            <!-- Галерея будет заполнена через JavaScript -->
-        </div>
-
-        <div class="no-results" id="no-results">
-            <i class="fas fa-search"></i>
-            Ничего не найдено. Попробуй другой запрос живо.
-        </div>
-
-        <div id="details-container">
-            <!-- Детали будут заполнены через JavaScript -->
-        </div>
-
-        <footer>
-            © 2025 9 "З" Сделал Давид Исмаилов. по вопросам tg @loufiks.
-        </footer>
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Данные для альбома
+        const albumPhotos = [
+            { src: "https://messages-prod.27c852f3500f38c1e7786e2c9ff9e48f.r2.cloudflarestorage.com/019c10dc-9949-7a4d-82d8-762cec2e9672/1769809856563-019c10e2-fce7-7f85-8c3b-eeea668a0837.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=af634fe044bd071ab4c5d356fdace60f%2F20260130%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260130T215057Z&X-Amz-Expires=3600&X-Amz-Signature=0033934a395d501e29ea93141b80a31e690bea4b32871d2113a9410ffed57101&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject", caption: "Первое событие года" },
+            { src: "https://i.postimg.cc/mgLbk5Jm/3b5da90f-07cf-45e2-aa42-d90c935228a4.jpg", caption: "Призеденские соревнования" },
+            { src: "https://i.postimg.cc/L8QMX6jr/b899910f-5d5e-43c9-b4d6-65b203580198.jpg", caption: "Наши прогулки" },
+            { src: "https://i.postimg.cc/KvQ6qvpn/f6603969-a52b-44d1-b2bf-68be17484203.jpg", caption: "Классный час" },
+            { src: "https://i.postimg.cc/VLsTCPsz/l.jpg", caption: "Лучшие моменты" },
+            { src: "https://i.postimg.cc/hvDCTVB3/58cdc404-52c7-4b13-a7cc-f108adb2bce2.jpg", caption: "Зима 2026" }
+        ];
+
+        let currentPhotoIndex = 0;
+
+        // Инициализация альбома
+        function initAlbum() {
+            const albumGrid = document.getElementById('album-grid');
+            albumGrid.innerHTML = '';
+
+            albumPhotos.forEach((photo, index) => {
+                const card = document.createElement('div');
+                card.className = 'album-card';
+                card.innerHTML = `
+                    <img src="${photo.src}" alt="${photo.caption}">
+                    <i class="fas fa-search-plus zoom-icon"></i>
+                    <div class="caption">${photo.caption}</div>
+                `;
+                card.addEventListener('click', () => openLightbox(index));
+                albumGrid.appendChild(card);
+            });
+        }
+
+        // Открытие лайтбокса
+        function openLightbox(index) {
+            currentPhotoIndex = index;
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+            const counter = document.getElementById('lightbox-counter');
+
+            img.src = albumPhotos[index].src;
+            caption.textContent = albumPhotos[index].caption;
+            counter.textContent = `${index + 1} / ${albumPhotos.length}`;
+
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Закрытие лайтбокса
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Навигация по фото
+        function navigatePhoto(direction) {
+            currentPhotoIndex += direction;
+            if (currentPhotoIndex < 0) currentPhotoIndex = albumPhotos.length - 1;
+            if (currentPhotoIndex >= albumPhotos.length) currentPhotoIndex = 0;
+
+            const img = document.getElementById('lightbox-img');
+            const caption = document.getElementById('lightbox-caption');
+            const counter = document.getElementById('lightbox-counter');
+
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = albumPhotos[currentPhotoIndex].src;
+                caption.textContent = albumPhotos[currentPhotoIndex].caption;
+                counter.textContent = `${currentPhotoIndex + 1} / ${albumPhotos.length}`;
+                img.style.opacity = '1';
+            }, 200);
+        }
+
+        // Обработчики лайтбокса
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.getElementById('lightbox-prev').addEventListener('click', () => navigatePhoto(-1));
+        document.getElementById('lightbox-next').addEventListener('click', () => navigatePhoto(1));
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        // Навигация клавишами
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('active')) return;
+
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigatePhoto(-1);
+            if (e.key === 'ArrowRight') navigatePhoto(1);
+        });
+
+        // --- JS ДЛЯ ВКЛАДОК ---
+        document.getElementById('album-tab').addEventListener('click', function() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('album-section').style.display = 'block';
+            document.getElementById('album-tab').classList.add('active');
+            document.getElementById('main-tab').classList.remove('active');
+            window.scrollTo(0,0);
+            initAlbum();
+        });
+
+        document.getElementById('main-tab').addEventListener('click', function() {
+            document.getElementById('album-section').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('main-tab').classList.add('active');
+            document.getElementById('album-tab').classList.remove('active');
+            window.scrollTo(0,0);
+        });
+
         // Инициализация частиц
         document.addEventListener('DOMContentLoaded', function() {
-            // Показываем загрузчик
             document.getElementById('loader').classList.add('active');
             
-            // Имитация загрузки
             setTimeout(() => {
                 initParticles('medium');
-                
-                // Инициализация галереи
                 createGallery();
                 
-                // Добавляем обработчик для поиска
                 document.getElementById('search').addEventListener('input', handleSearch);
-                
-                // Добавляем обработчик для переключения вида
-                document.getElementById('grid-view-btn').addEventListener('click', () => toggleView('grid'));
-                document.getElementById('list-view-btn').addEventListener('click', () => toggleView('list'));
-                
-                // Добавляем обработчик для настроек
                 document.getElementById('settings-toggle').addEventListener('click', toggleSettings);
-                
-                // Добавляем обработчики для настроек
                 document.getElementById('animation-speed').addEventListener('change', handleSettingChange);
                 document.getElementById('particles-density').addEventListener('change', handleSettingChange);
                 document.getElementById('color-scheme').addEventListener('change', handleSettingChange);
                 
-                // Добавляем эффект параллакса для заголовка
                 initParallax();
                 
-                // Добавляем обработчик для кнопки "О классе"
                 document.getElementById('about-class-btn').addEventListener('click', showClassInfo);
                 document.getElementById('close-class-info').addEventListener('click', hideClassInfo);
                 document.getElementById('overlay').addEventListener('click', hideClassInfo);
                 
-                // Инициализация музыкального плеера
                 initMusicPlayer();
                 
-                // Скрываем загрузчик
                 document.getElementById('loader').classList.remove('active');
             }, 1500);
         });
@@ -1567,7 +1889,7 @@
                 id: 26,
                 name: "Исмаилов Давид",
                 image: "https://i.pinimg.com/736x/59/d1/3a/59d13a68bc5a4b9f534e97ffd4627f22.jpg",
-                description: "Ну вообще так-то это я, создал этот сайт, математика любит меня - я люблю её. Учусь хорошо но не лучше димона"
+                description: "гг"
             },
             {
                 id: 27,
@@ -1581,7 +1903,6 @@
         let currentClassmateId = null;
         let filteredClassmates = [...classmates];
         let isDarkTheme = false;
-        let currentView = 'grid';
 
         // Переменные для музыкального плеера
         let audioPlayer = null;
@@ -1591,65 +1912,28 @@
 
         // Плейлист для класса
         const playlist = [
-            {
-                title: "Ozin Gana",
-                artist: "9 'З' Класс",
-                src: "music 1.mp3"
-            },
-            {
-                title: "Доля воровская",
-                artist: "9 'З' Класс",
-                src: "music 2.mp3"
-            },
-            {
-                title: "Бетховен",
-                artist: "9 'З' Класс",
-                src: "music 3.mp3"
-            },
-            {
-                title: "Выпускной",
-                artist: "9 'З' Класс",
-                src: "music 4.mp3"
-            },
-            { 
-                title: "3 сентября",
-                artist: "9 'з' Класс",
-                src: "music 5.mp3"
-            },
-            {
-                title: "Миллион алых роз",
-                artist: "9 'з' Класс",
-                src: "music 6.mp3"
-
-            },
-            {
-                title: "Последняя дискотека",
-                artist: "9 'з' Класс",
-                src: "music 7.mp3"
-            },
-            {
-                title: "Жить в кайф",
-                artist: "9 'з' Класс",
-                src: "music 8.mp3"
-
-            }
+            { title: "Ozin Gana", artist: "9 'З' Класс", src: "music 1.mp3" },
+            { title: "Доля воровская", artist: "9 'З' Класс", src: "music 2.mp3" },
+            { title: "Бетховен", artist: "9 'З' Класс", src: "music 3.mp3" },
+            { title: "Выпускной", artist: "9 'З' Класс", src: "music 4.mp3" },
+            { title: "3 сентября", artist: "9 'з' Класс", src: "music 5.mp3" },
+            { title: "Миллион алых роз", artist: "9 'з' Класс", src: "music 6.mp3" },
+            { title: "Последняя дискотека", artist: "9 'з' Класс", src: "music 7.mp3" },
+            { title: "Жить в кайф", artist: "9 'з' Класс", src: "music 8.mp3" }
         ];
 
-        // Функция для показа информации о классе
         function showClassInfo() {
             document.getElementById('class-info').classList.add('active');
             document.getElementById('overlay').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Блокируем прокрутку фона
+            document.body.style.overflow = 'hidden';
         }
 
-        // Функция для скрытия информации о классе
         function hideClassInfo() {
             document.getElementById('class-info').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
-            document.body.style.overflow = ''; // Восстанавливаем прокрутку
+            document.body.style.overflow = '';
         }
 
-        // Инициализация частиц
         function initParticles(density = 'medium') {
             let densityValue;
             switch(density) {
@@ -1694,7 +1978,6 @@
             });
         }
 
-        // Функция для создания галереи
         function createGallery() {
             const gallery = document.getElementById('gallery');
             gallery.innerHTML = '';
@@ -1726,15 +2009,10 @@
                 
                 gallery.appendChild(card);
             });
-            
-            // Применяем текущий вид
-            toggleView(currentView, true);
         }
 
-        // Функция для обработки поиска
         function handleSearch() {
             const searchTerm = document.getElementById('search').value.toLowerCase();
-            const gallery = document.getElementById('gallery');
             const noResults = document.getElementById('no-results');
             
             if (searchTerm === '') {
@@ -1757,19 +2035,15 @@
             }
         }
 
-        // Функция для показа деталей об ученике
         function showDetails(id) {
             const classmate = classmates.find(c => c.id === id);
             if (!classmate) return;
             
             currentClassmateId = id;
             
-            // Показываем загрузчик
             document.getElementById('loader').classList.add('active');
             
-            // Имитация загрузки данных
             setTimeout(() => {
-                // Скрываем галерея и показываем детали
                 document.getElementById('gallery').style.display = 'none';
                 document.getElementById('no-results').style.display = 'none';
                 
@@ -1802,7 +2076,6 @@
                 backButton.innerHTML = '<i class="fas fa-arrow-left"></i> Назад к галерее';
                 backButton.addEventListener('click', backToGallery);
                 
-                // Кнопки навигации
                 const navButtons = document.createElement('div');
                 navButtons.className = 'navigation-buttons';
                 
@@ -1816,7 +2089,6 @@
                 nextButton.innerHTML = 'Следующий <i class="fas fa-chevron-right"></i>';
                 nextButton.addEventListener('click', () => navigateToAdjacent(1));
                 
-                // Кнопки социальных сетей
                 const socialButtons = document.createElement('div');
                 socialButtons.className = 'social-buttons';
                 
@@ -1843,42 +2115,33 @@
                 details.appendChild(content);
                 detailsContainer.appendChild(details);
                 
-                // Прокрутка к деталям
                 details.scrollIntoView({ behavior: 'smooth' });
                 
-                // Скрываем загрузчик
                 document.getElementById('loader').classList.remove('active');
             }, 500);
         }
 
-        // Функция для навигации между учениками
         function navigateToAdjacent(direction) {
-            // Используем filteredClassmates для навигации по отфильтрованным результатам
             const currentIndex = filteredClassmates.findIndex(c => c.id === currentClassmateId);
             
             if (currentIndex === -1) return;
             
             let newIndex = currentIndex + direction;
             
-            // Зацикливаем навигацию
             if (newIndex < 0) newIndex = filteredClassmates.length - 1;
             if (newIndex >= filteredClassmates.length) newIndex = 0;
             
-            // Показываем нового ученика
             showDetails(filteredClassmates[newIndex].id);
         }
 
-        // Функция для возврата к галерее
         function backToGallery() {
             document.getElementById('details-container').innerHTML = '';
-            document.getElementById('gallery').style.display = currentView === 'grid' ? 'flex' : 'block';
+            document.getElementById('gallery').style.display = 'flex';
             document.getElementById('no-results').style.display = filteredClassmates.length === 0 ? 'block' : 'none';
             
-            // Прокрутка к началу галереи
             document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Переключение темы
         document.getElementById('theme-toggle').addEventListener('click', function() {
             isDarkTheme = !isDarkTheme;
             document.body.classList.toggle('dark-theme', isDarkTheme);
@@ -1893,34 +2156,10 @@
             }
         });
 
-        // Переключение вида (сетка/список)
-        function toggleView(view, force = false) {
-            if (currentView === view && !force) return;
-            
-            currentView = view;
-            const gallery = document.getElementById('gallery');
-            const gridBtn = document.getElementById('grid-view-btn');
-            const listBtn = document.getElementById('list-view-btn');
-            
-            if (view === 'grid') {
-                gallery.classList.remove('list-view');
-                gallery.style.display = 'flex';
-                gridBtn.classList.add('active');
-                listBtn.classList.remove('active');
-            } else {
-                gallery.classList.add('list-view');
-                gallery.style.display = 'block';
-                listBtn.classList.add('active');
-                gridBtn.classList.remove('active');
-            }
-        }
-
-        // Переключение панели настроек
         function toggleSettings() {
             document.getElementById('settings-panel').classList.toggle('active');
         }
 
-        // Обработка изменений настроек
         function handleSettingChange(e) {
             const setting = e.target.id;
             const value = e.target.value;
@@ -1939,7 +2178,6 @@
             }
         }
 
-        // Применение цветовой схемы
         function applyColorScheme(scheme) {
             const root = document.documentElement;
             
@@ -1966,7 +2204,6 @@
             }
         }
 
-        // Поделиться профилем
         function shareProfile(classmate) {
             if (navigator.share) {
                 navigator.share({
@@ -1976,12 +2213,10 @@
                 })
                 .catch(error => console.log('Ошибка при использовании Web Share API:', error));
             } else {
-                // Fallback для браузеров, которые не поддерживают Web Share API
                 prompt('Скопируйте ссылку для профиля:', window.location.href + '?id=' + classmate.id);
             }
         }
 
-        // Инициализация эффекта параллакса для заголовка
         function initParallax() {
             const heading = document.querySelector('.parallax-heading');
             
@@ -1993,35 +2228,27 @@
             });
         }
 
-        // Инициализация музыкального плеера
         function initMusicPlayer() {
-            // Создаем элемент audio
             audioPlayer = new Audio();
             audioPlayer.volume = 0.5;
             
-            // Устанавливаем первую композицию
             loadTrack(currentTrackIndex);
             
-            // Обработчики событий для кнопок
             document.getElementById('music-toggle').addEventListener('click', togglePlay);
             document.getElementById('volume-slider').addEventListener('input', setVolume);
             document.getElementById('playlist-btn').addEventListener('click', togglePlaylist);
             
-            // Обработчик события окончания трека
             audioPlayer.addEventListener('ended', playNextTrack);
             
-            // Обработчик для расширения/сворачивания плеера
             document.getElementById('music-player').addEventListener('click', function(e) {
                 if (!e.target.closest('.music-toggle') && !e.target.closest('.playlist-btn')) {
                     this.classList.toggle('expanded');
                 }
             });
             
-            // Заполняем плейлист
             populatePlaylist();
         }
 
-        // Загрузка трека
         function loadTrack(index) {
             if (index >= 0 && index < playlist.length) {
                 currentTrackIndex = index;
@@ -2033,7 +2260,6 @@
                 document.getElementById('music-title').textContent = track.title;
                 document.getElementById('music-artist').textContent = track.artist;
                 
-                // Обновляем активный элемент в плейлисте
                 const playlistItems = document.querySelectorAll('.playlist-item');
                 playlistItems.forEach((item, i) => {
                     if (i === index) {
@@ -2043,16 +2269,14 @@
                     }
                 });
                 
-                // Автовоспроизведение
                 if (isPlaying) {
                     audioPlayer.play().catch(e => {
-                        console.log('Автовоспроизведение заблокировано. Нажмите на кнопку воспроизведения.');
+                        console.log('Автовоспроизведение заблокировано.');
                     });
                 }
             }
         }
 
-        // Переключение воспроизведения/паузы
         function togglePlay() {
             if (isPlaying) {
                 audioPlayer.pause();
@@ -2068,13 +2292,11 @@
             isPlaying = !isPlaying;
         }
 
-        // Установка громкости
         function setVolume() {
             const volume = document.getElementById('volume-slider').value;
             audioPlayer.volume = volume;
         }
 
-        // Воспроизведение следующего трека
         function playNextTrack() {
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             loadTrack(currentTrackIndex);
@@ -2083,23 +2305,12 @@
             }
         }
 
-        // Воспроизведение предыдущего трека
-        function playPrevTrack() {
-            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrackIndex);
-            if (isPlaying) {
-                audioPlayer.play();
-            }
-        }
-
-        // Переключение видимости плейлиста
         function togglePlaylist() {
             const panel = document.getElementById('playlist-panel');
             panel.classList.toggle('active');
             playlistExpanded = !playlistExpanded;
         }
 
-        // Заполнение плейлиста
         function populatePlaylist() {
             const playlistContainer = document.getElementById('playlist');
             playlistContainer.innerHTML = '';
@@ -2131,11 +2342,9 @@
             });
         }
 
-        // Анимация при загрузке страницы
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
         });
     </script>
 </body>
-
 </html>
